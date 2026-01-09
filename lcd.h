@@ -72,6 +72,7 @@ private:
 
 void blink(char* message);
 void scroll (char* message);
+void print (char* text);
 
 
 #endif /* LCD_H_ */

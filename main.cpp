@@ -6,8 +6,8 @@
 #include "lcd.h"
 #include "uart.h"
 #include <string.h>
-
-
+#include <stdlib.h>
+#include <time.h>
 
 
 
@@ -29,11 +29,14 @@
 
 
 
-typedef struct{
-    int chance[10];
-    char* message[10];
-    bool active;
-} customer;
+
+
+class customer{
+    public:
+        int chance[10];
+        char* message[10];
+        bool active;
+};
 
 int main(void){
     init_serial();
@@ -43,46 +46,114 @@ int main(void){
     lcd.Clear();      // Clear the LCD
     //lcd.WriteText((char *)"Hej hej");
 
-    customer Harry = {.chance = {1,2,3,4,5}, .message ={"Honest Harrys Cars", "A good purchase (for Harry!)", "Buy cars at Harrys"}, .active = false};
+    customer Harry = {.chance = {1,2,3,4,5}, .message ={"Buy cars at Harrys","A good purchase (for Harry!)","Honest Harrys Cars" }, .active = false};
 
     customer IoT = {.chance = {6}, .message = "IoT Advertisements", .active = false};
 
     customer Pete = {.chance = {7,8}, .message = {"Pete will build it for you", "Unauthorised constduction? Call Pete!"}, .active = false};
 
-    customer Anka = {.chance = {9,10,11}, .message = {"Hurry up while stores last", "yummy!"}, .active = false};
+    customer Duck = {.chance = {9,10,11}, .message = {"Buy pies from Grandma Duck", "Hurry up while pies remain"}, .active = false};
     
-    customer goofy = {.chance = {12,13,14,15}, .message = {"mysteries? call goofy", "Goofy finds it"}, .active = false};
+    customer Goofy = {.chance = {12,13,14,15}, .message = {"mysteries? call goofy", "Goofy finds it"}, .active = false};
     
+    int random_number = rand() % 15 + 1; // 1 to 15
 
-    //blink(Harry.message);
-    //blink(IoT.message);
-
-
-
-    //lcd.WriteText((char *)"Hej hej");
-    //printf("Hej hej\n");
-
-  
-    
-    //int r = 12;
-    //printf("Hej 2 %d\n",r);
-    // // //Sätt till INPUT_PULLUP
-    // BIT_CLEAR(DDRB,BUTTON_PIN); // INPUT MODE
-    // BIT_SET(PORTB,BUTTON_PIN); 
-
-    // DATA DIRECTION = avgör mode
-    // om output så skickar vi  1 eller 0 på motsvarande pinne på PORT
-    // om input så läser vi  1 eller 0 på motsvarande pinne på PIN
-    //bool blinking = false;
     while(1){
+        lcd.Clear();
         
-        //blink(Harry.message[0]);
+        if (Harry.active == true){
+            random_number = rand() % 15 + 6; // 6 to 15
+            Harry.active = (false);
+        }
+        if (IoT.active == true){
+            do{
+                random_number = rand() % 15 + 1; // 7 to 15
+            } while (random_number == 6);
+            IoT.active = (false);
+        }
+        if (Pete.active == true){
+            do{
+                random_number = rand() % 15 + 1; // 9 to 15
+            } while (random_number == 7 || random_number == 8);
+            Pete.active = (false);
+        }
+        if (Duck.active == true){
+            do{
+                random_number = rand() % 15 + 1; // 12 to 15
+            } while (random_number >= 9 && random_number <=11);
+            Duck.active = (false);
+        }
+        if (Goofy.active == true){
+            random_number = rand() % 11 + 1; // 1 to 11
+            Goofy.active = (false);
+        }
+        
+        
+        if (random_number >= 1 && random_number <= 5) {
+            Harry.active = (true);
+        } else if (random_number == 6) {
+            IoT.active = (true);
+        } else if (random_number >= 7 && random_number <= 8) {
+            Pete.active = (true);
+        } else if (random_number >= 9 && random_number <= 11) {
+            Duck.active = (true);
+        } else if (random_number >= 12 && random_number <= 15) {
+            Goofy.active = (true);
+        }
 
-        //lcd.WriteText((char *)Harry.message[1]);
-        //_delay_ms(20000);
-        
-        scroll(IoT.message[0]);
-        
+        if (Harry.active = (true)) {
+            int temp = rand() % 3;
+            if (temp == 0){
+                scroll(Harry.message[0]);
+            }
+            else if (temp == 1){
+                print(Harry.message[1]);
+            }
+            else if (temp == 2){
+                blink(Harry.message[2]);
+            }
+            Harry.active = (false);
+        }
+
+        if (Duck.active = (true)) {
+            int temp = rand() % 2;
+            if (temp == 0){
+                scroll(Duck.message[0]);
+            }
+            else if (temp == 1){
+                print(Duck.message[1]);
+            }
+            Duck.active = (false);
+        }
+
+        if (Goofy.active = (true)) {
+            int temp = rand() % 2;
+            if (temp == 0){
+                scroll(Goofy.message[0]);
+            }
+            else if (temp == 1){
+                blink(Goofy.message[1]);
+            }
+            Goofy.active = (false);
+        }
+
+        if (IoT.active = (true)) {
+            print(IoT.message[0]);
+            IoT.active = (false);
+        }
+
+        if (Pete.active = (true)) {
+            time_t t = time(0);
+
+            tm *ltm = localtime(&t);
+            if (ltm->tm_min % 2 == 0){
+                scroll(Pete.message[0]);
+            }
+            else{ 
+                print(Pete.message[1]);
+            }
+            Pete.active = (false);
+        }
     }
     return 0;
 }

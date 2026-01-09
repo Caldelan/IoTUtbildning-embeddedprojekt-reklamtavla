@@ -132,7 +132,7 @@ void HD44780::CreateChar(uint8_t location, uint8_t charArray[]) {
 void blink (char* message){
   HD44780 lcd;
   lcd.Clear();
-  for (int i = 0; i<=3; i++){ // blink, lasts roughly 20 seconds
+  for (int i = 0; i<=3; i++){ // blink, lasts roughly 20 seconds, 3
       lcd.WriteText((char*)message);
       _delay_ms(750);
       lcd.Clear();
@@ -158,7 +158,7 @@ void scroll(char* text) {
   int length = strlen(text);
 
     while (1) {
-      if (count >= 20) break;
+      if (count >= 4) break; // 5
         lcd.Clear();
         lcd.WriteText((char*)text);
         _delay_ms(700);
@@ -173,4 +173,11 @@ void scroll(char* text) {
         }
       count++;
     }
+}
+
+void print(char* text) {
+  HD44780 lcd;
+  lcd.Clear();
+  lcd.WriteText((char*)text);
+  _delay_ms(20000); //20000
 }
