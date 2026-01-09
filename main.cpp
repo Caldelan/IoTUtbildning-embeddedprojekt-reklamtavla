@@ -5,6 +5,10 @@
 #include <stdbool.h>
 #include "lcd.h"
 #include "uart.h"
+#include <string.h>
+
+
+
 
 // https://wokwi.com/projects/416241646559459329
 
@@ -22,7 +26,12 @@
 
 #define BUTTON_IS_CLICKED(PINB,BUTTON_PIN) !BIT_CHECK(PINB,BUTTON_PIN)
 
- 
+
+
+typedef struct{
+    int paid;
+    char* message[10];
+} customer;
 
 int main(void){
     init_serial();
@@ -30,14 +39,32 @@ int main(void){
 
     lcd.Initialize(); // Initialize the LCD
     lcd.Clear();      // Clear the LCD
+    //lcd.WriteText((char *)"Hej hej");
 
-    lcd.WriteText((char *)"Hej hej");
-    printf("Hej hej\n");
+    customer Harry = {.paid = 5000, .message ={"Hederlige Harrys Bilar", "Bra bilar!"}};
+
+    customer IoT = {.paid = 1000, .message = "IoT reklam"};
+
+    customer Petter = {.paid = 1500, .message = {"Petter bygger till dig", "Bygga svart? ring Petter"}};
+
+    customer Anka = {.paid = 3000, .message = {"skynda medans det finns kvar", "Goda"}};
+     
+    //scroll(Harry.message[1]);
+  
+
+
+    //blink(Harry.message);
     
+    //blink(IoT.message);
+
+
+    //lcd.WriteText((char *)"Hej hej");
+    //printf("Hej hej\n");
     
+  
     
-    int r = 12;
-    printf("Hej 2 %d\n",r);
+    //int r = 12;
+    //printf("Hej 2 %d\n",r);
     // // //Sätt till INPUT_PULLUP
     // BIT_CLEAR(DDRB,BUTTON_PIN); // INPUT MODE
     // BIT_SET(PORTB,BUTTON_PIN); 
@@ -47,6 +74,15 @@ int main(void){
     // om input så läser vi  1 eller 0 på motsvarande pinne på PIN
     //bool blinking = false;
     while(1){
+        blink(Harry.message[0]);
+
+        lcd.WriteText((char *)Harry.message[1]);
+        _delay_ms(20000);
+        
+        scroll(IoT.message[0]);
     }
     return 0;
 }
+
+
+

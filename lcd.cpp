@@ -24,6 +24,7 @@ void HD44780::WriteText(char *text) {
     if (charCount == 16) { // Move to the second line after 16 characters
       GoTo(0, 1);
     } 
+    
     // else if (charCount ==
     //            32) { // Reset if more than 32 characters (display size)
     //   Clear();       // Clear the display
@@ -125,4 +126,41 @@ void HD44780::CreateChar(uint8_t location, uint8_t charArray[]) {
   for (uint8_t i = 0; i < 8; i++) {
     WriteData(charArray[i]);
   }
+}
+
+
+void blink (char* message){
+  HD44780 lcd;
+  lcd.Clear();
+  for (int i = 0; i<=3; i++){ // blink, lasts roughly 20 seconds
+      lcd.WriteText((char*)message);
+      _delay_ms(750);
+      lcd.Clear();
+      _delay_ms(200);
+      lcd.WriteText((char*)message);
+      _delay_ms(750);
+      lcd.Clear();
+      _delay_ms(200);
+      lcd.WriteText((char*)message);
+      _delay_ms(2000);
+      lcd.Clear();
+      _delay_ms(200);
+  }
+  lcd.Clear();
+}
+
+
+
+void scroll(char* text) {
+  HD44780 lcd;
+      
+    int length = strlen(text);
+    for (int i = 0; i < length; i++) {
+        lcd.Clear();
+
+        lcd.GoTo(0, 0);
+
+        lcd.WriteText(text + (i < length ? i : length - 1)); 
+        _delay_ms(300);
+    }
 }

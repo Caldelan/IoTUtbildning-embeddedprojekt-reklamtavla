@@ -5,6 +5,7 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <util/delay.h>
+#include <string.h>
 
 // Pin configuration
 #define LCD_RS_DIR DDRD
@@ -45,6 +46,10 @@
 #define rightSideHourglass                                                     \
   { 0x00, 0x06, 0x0A, 0x12, 0x0A, 0x06, 0x00, 0x00 }
 
+
+
+
+
 // HD44780 LCD class
 class HD44780 {
 public:
@@ -64,5 +69,9 @@ private:
   void OutNibble(unsigned char nibble);
   void Write(unsigned char byte);
 };
+
+void blink(char* message);
+void scroll (char* message);
+
 
 #endif /* LCD_H_ */
