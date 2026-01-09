@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "c:\\Users\\Calde\\WS\\IoT-utbildning\\C\\IoT-Grupprojekt-reklamtavla",
+            "binaryPath": "c:\\Users\\Calde\\WS\\IoT-utbildning\\C\\IoT-Grupprojekt-reklamtavla\\avrdemo.elf",
+            "binaryArgs": []
+        }
+    ]
+}

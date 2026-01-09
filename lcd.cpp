@@ -153,14 +153,24 @@ void blink (char* message){
 
 void scroll(char* text) {
   HD44780 lcd;
-      
-    int length = strlen(text);
-    for (int i = 0; i < length; i++) {
+    
+  int count = 0;
+  int length = strlen(text);
+
+    while (1) {
+      if (count >= 20) break;
         lcd.Clear();
+        lcd.WriteText((char*)text);
+        _delay_ms(700);
 
-        lcd.GoTo(0, 0);
+        for (int i = 0; i < length; i++) {
+          lcd.Clear();
 
-        lcd.WriteText(text + (i < length ? i : length - 1)); 
-        _delay_ms(300);
+          lcd.GoTo(0, 0);
+      
+          lcd.WriteText(text + (i < length ? i : length - 1)); 
+          _delay_ms(300);
+        }
+      count++;
     }
 }
