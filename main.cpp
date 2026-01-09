@@ -56,6 +56,7 @@ int main(void){
     
     customer Goofy = {.chance = {12,13,14,15}, .message = {"mysteries? call goofy", "Goofy finds it"}, .active = false};
     
+    srand(time(NULL));
     int random_number = rand() % 15 + 1; // 1 to 15
 
     while(1){
@@ -73,7 +74,7 @@ int main(void){
         }
         if (Pete.active == true){
             do{
-                random_number = rand() % 15 + 1; // 9 to 15
+                random_number = rand() % 15 + 1; // 1 to 15
             } while (random_number == 7 || random_number == 8);
             Pete.active = (false);
         }
@@ -112,7 +113,6 @@ int main(void){
             else if (temp == 2){
                 blink(Harry.message[2]);
             }
-            Harry.active = (false);
         }
 
         if (Duck.active = (true)) {
@@ -123,7 +123,6 @@ int main(void){
             else if (temp == 1){
                 print(Duck.message[1]);
             }
-            Duck.active = (false);
         }
 
         if (Goofy.active = (true)) {
@@ -134,12 +133,10 @@ int main(void){
             else if (temp == 1){
                 blink(Goofy.message[1]);
             }
-            Goofy.active = (false);
         }
 
         if (IoT.active = (true)) {
             print(IoT.message[0]);
-            IoT.active = (false);
         }
 
         if (Pete.active = (true)) {
@@ -152,7 +149,6 @@ int main(void){
             else{ 
                 print(Pete.message[1]);
             }
-            Pete.active = (false);
         }
     }
     return 0;
