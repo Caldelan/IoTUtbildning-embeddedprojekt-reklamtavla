@@ -44,20 +44,20 @@ int main(void){
 
     lcd.Initialize(); // Initialize the LCD
     lcd.Clear();      // Clear the LCD
-    //lcd.WriteText((char *)"Hej hej");
 
     customer Harry = {.chance = {1,2,3,4,5}, .message ={"Buy cars at Harrys","A good purchase (for Harry!)","Honest Harrys Cars" }, .active = false};
 
     customer IoT = {.chance = {6}, .message = "IoT Advertisements", .active = false};
 
-    customer Pete = {.chance = {7,8}, .message = {"Pete will build it for you", "Unauthorised constduction? Call Pete!"}, .active = false};
+    customer Pete = {.chance = {7,8}, .message = {"Pete will build it for you", "Illegal construction? Pete"}, .active = false};
 
     customer Duck = {.chance = {9,10,11}, .message = {"Buy pies from Grandma Duck", "Hurry up while pies remain"}, .active = false};
     
     customer Goofy = {.chance = {12,13,14,15}, .message = {"mysteries? call goofy", "Goofy finds it"}, .active = false};
     
-    srand(time(NULL));
+    srand(8510);
     int random_number = rand() % 15 + 1; // 1 to 15
+
 
     while(1){
         lcd.Clear();
@@ -68,7 +68,7 @@ int main(void){
         }
         if (IoT.active == true){
             do{
-                random_number = rand() % 15 + 1; // 7 to 15
+                random_number = rand() % 15 + 1; // everything except 6
             } while (random_number == 6);
             IoT.active = (false);
         }
