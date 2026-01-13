@@ -55,13 +55,13 @@ int main(void){
     
     customer Goofy = {.chance = {12,13,14,15}, .message = {"mysteries? call goofy", "Goofy finds it"}, .active = false};
     
-    srand(8510);
+    srand(time(NULL));
     int random_number = rand() % 15 + 1; // 1 to 15
 
 
     while(1){
         lcd.Clear();
-        
+        //checks if a customer is active and generetes a new random number excluding those belonging to the active customer
         if (Harry.active == true){
             random_number = rand() % 15 + 6; // 6 to 15
             Harry.active = (false);
@@ -89,7 +89,7 @@ int main(void){
             Goofy.active = (false);
         }
         
-        
+        //sets a customer to active depening on what number was generated
         if (random_number >= 1 && random_number <= 5) {
             Harry.active = (true);
         } else if (random_number == 6) {
@@ -102,6 +102,7 @@ int main(void){
             Goofy.active = (true);
         }
 
+        //checks with customer is active and determines wich message to print
         if (Harry.active = (true)) {
             int temp = rand() % 3;
             if (temp == 0){
